@@ -255,153 +255,55 @@ let countries = [
   },
 ];
 
-// let pawns = [
-//   {
-//     id: 1,
-//     name: "Red",
-//     x: 89,
-//     y: 88,
-//   },
-//   {
-//     id: 2,
-//     name: "Blue",
-//     x: 93,
-//     y: 88,
-//   },
-//   {
-//     id: 3,
-//     name: "Yellow",
-//     x: 89,
-//     y: 93,
-//   },
-//   {
-//     id: 4,
-//     name: "Green",
-//     x: 93,
-//     y: 93,
-//   },
-// ];
+const diceFace = document.getElementById("dice-face");
+const pawns = {
+  red: { x: 89, y: 88 },
+  blue: { x: 93, y: 88 },
+  yellow: { x: 89, y: 93 },
+  green: { x: 93, y: 93 },
+};
 
-let redPawn = { x: 89, y: 88 };
-let bluePawn = { x: 93, y: 88 };
-let yellowPawn = { x: 89, y: 93 };
-let greenPawn = { x: 93, y: 93 };
+const pawnElements = {
+  red: document.getElementById("pawn-red"),
+  blue: document.getElementById("pawn-blue"),
+  yellow: document.getElementById("pawn-yellow"),
+  green: document.getElementById("pawn-green"),
+};
 
-let redPawnHtml = document.getElementById("pawn-red");
-let bluePawnHtml = document.getElementById("pawn-blue");
-let yellowPawnHtml = document.getElementById("pawn-yellow");
-let greenPawnHtml = document.getElementById("pawn-green");
+let pawnPositions = {
+  red: 0,
+  blue: 0,
+  yellow: 0,
+  green: 0,
+};
 
 function rollDice() {
-  const diceFace = document.getElementById("dice-face");
-
   diceFace.innerHTML = "";
   diceEffect();
-  let count = 0;
-  let rollResult = Math.floor(Math.random() * 6) + 1;
+  const rollResult = Math.floor(Math.random() * 6) + 1;
 
   for (let i = 0; i < rollResult; i++) {
     const dot = document.createElement("div");
     dot.classList.add("dot");
     diceFace.appendChild(dot);
-    count++;
   }
-  // movePawn(rollResult);
+
   return rollResult;
 }
-let redPawnPos = 0;
-let bluePawnPos = 0;
-let yellowPawnPos = 0;
-let greenPawnPos = 0;
 
-let redBlock = 0;
-let blueBlock = 0;
-let yellowBlock = 0;
-let greenBlock = 0;
+function movePawn(color) {
+  const rollResult = rollDice();
+  pawnPositions[color] = (pawnPositions[color] + rollResult) % (35 + 1);
 
-let redSum = 0;
-let blueSum = 0;
-let yellowSum = 0;
-let greenSum = 0;
+  const block = countries.find(
+    (country) => country.id === pawnPositions[color]
+  );
+  const blockX = block.x;
+  const blockY = block.y;
 
-function moveRed() {
-  let rollResult = rollDice();
-  redSum += rollResult;
-  redPawnPos = redSum;
-  if (redSum <= 35) {
-    redBlock = countries.find((country) => country.id === redSum);
-  } else {
-    redSum = redPawnPos - 36;
-    redBlock = countries.find((country) => country.id === redSum);
-  }
-
-  let blockX = redBlock.x;
-  let blockY = redBlock.y;
-
-  redPawn = { x: blockX, y: blockY };
-  redPawnHtml.style.top = `${blockY}%`;
-  redPawnHtml.style.left = `${blockX}%`;
-  rollResult += rollResult;
-}
-
-function moveBlue() {
-  let rollResult = rollDice();
-  blueSum += rollResult;
-  bluePawnPos = blueSum;
-  if (blueSum <= 35) {
-    blueBlock = countries.find((country) => country.id === blueSum);
-  } else {
-    blueSum = bluePawnPos - 36;
-    blueBlock = countries.find((country) => country.id === blueSum);
-  }
-
-  let blockX = blueBlock.x;
-  let blockY = blueBlock.y;
-
-  bluePawn = { x: blockX, y: blockY };
-  bluePawnHtml.style.top = `${blockY}%`;
-  bluePawnHtml.style.left = `${blockX}%`;
-  rollResult += rollResult;
-}
-
-function moveYellow() {
-  let rollResult = rollDice();
-  yellowSum += rollResult;
-  yellowPawnPos = yellowSum;
-  if (yellowSum <= 35) {
-    yellowBlock = countries.find((country) => country.id === yellowSum);
-  } else {
-    yellowSum = yellowPawnPos - 36;
-    yellowBlock = countries.find((country) => country.id === yellowSum);
-  }
-
-  let blockX = yellowBlock.x;
-  let blockY = yellowBlock.y;
-
-  yellowPawn = { x: blockX, y: blockY };
-  yellowPawnHtml.style.top = `${blockY}%`;
-  yellowPawnHtml.style.left = `${blockX}%`;
-  rollResult += rollResult;
-}
-
-function moveGreen() {
-  let rollResult = rollDice();
-  greenSum += rollResult;
-  greenPawnPos = greenSum;
-  if (greenSum <= 35) {
-    greenBlock = countries.find((country) => country.id === greenSum);
-  } else {
-    greenSum = greenPawnPos - 36;
-    greenBlock = countries.find((country) => country.id === greenSum);
-  }
-
-  let blockX = greenBlock.x;
-  let blockY = greenBlock.y;
-
-  greenPawn = { x: blockX, y: blockY };
-  greenPawnHtml.style.top = `${blockY}%`;
-  greenPawnHtml.style.left = `${blockX}%`;
-  rollResult += rollResult;
+  pawns[color] = { x: blockX, y: blockY };
+  pawnElements[color].style.top = `${blockY}%`;
+  pawnElements[color].style.left = `${blockX}%`;
 }
 
 function diceEffect() {
@@ -410,4 +312,21 @@ function diceEffect() {
   setTimeout(function () {
     dice.classList.remove("dice-effect");
   }, 1000);
+}
+
+// Functions to move pawns based on color
+function moveRed() {
+  movePawn("red");
+}
+
+function moveBlue() {
+  movePawn("blue");
+}
+
+function moveYellow() {
+  movePawn("yellow");
+}
+
+function moveGreen() {
+  movePawn("green");
 }
