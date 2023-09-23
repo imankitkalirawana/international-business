@@ -276,6 +276,7 @@ let pawnPositions = {
   yellow: 0,
   green: 0,
 };
+let currTurn = 1;
 
 function rollDice() {
   diceFace.innerHTML = "";
@@ -287,8 +288,27 @@ function rollDice() {
     dot.classList.add("dot");
     diceFace.appendChild(dot);
   }
+  if (rollResult !== 6) {
+    currTurn = (currTurn % 4) + 1;
+  }
 
   return rollResult;
+}
+
+function start() {
+  checkTurn(currTurn);
+}
+
+function checkTurn(turn) {
+  if (turn == 1) {
+    movePawn("red");
+  } else if (turn == 2) {
+    movePawn("blue");
+  } else if (turn == 3) {
+    movePawn("yellow");
+  } else if (turn == 4) {
+    movePawn("green");
+  }
 }
 
 function movePawn(color) {
@@ -312,21 +332,4 @@ function diceEffect() {
   setTimeout(function () {
     dice.classList.remove("dice-effect");
   }, 1000);
-}
-
-// Functions to move pawns based on color
-function moveRed() {
-  movePawn("red");
-}
-
-function moveBlue() {
-  movePawn("blue");
-}
-
-function moveYellow() {
-  movePawn("yellow");
-}
-
-function moveGreen() {
-  movePawn("green");
 }
