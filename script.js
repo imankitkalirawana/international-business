@@ -306,35 +306,36 @@ function rollDice() {
   // movePawn(rollResult);
   return rollResult;
 }
-let redSum,
-  blueSum,
-  yellowSum,
-  greenSum = 0;
-let redBlock, blueBlock, yellowBlock, greenBlock;
-let redPawnPos,
-  bluePawnPos,
-  yellowPawnPos,
-  greenPawnPos = 0;
+let sum = 0;
+let block;
+let pawnPos = 0;
 
 function movePawn() {
   let rollResult = rollDice();
   let x = yellowPawn.x;
   let y = yellowPawn.y;
-  yellowSum += rollResult;
-  yellowPawnPos = yellowSum;
-  if (yellowSum <= 35) {
-    yellowBlock = countries.find((country) => country.id === yellowSum);
+  sum += rollResult;
+  pawnPos = sum;
+  if (sum <= 35) {
+    block = countries.find((country) => country.id === sum);
   } else {
-    yellowSum = yellowPawnPos - 36;
-    yellowBlock = countries.find((country) => country.id === yellowSum);
+    sum = pawnPos - 36;
+    block = countries.find((country) => country.id === sum);
   }
 
-  let yellowBlockX = yellowBlock.x;
-  let yellowBlockY = yellowBlock.y;
+  // if (sum > 35) {
+  //   sum = 0 + rollResult;
+  //   // movePawn();
+  // }
 
-  yellowPawn = { x: yellowBlockX, y: yellowBlockY };
-  yellowPawnHtml.style.top = `${yellowBlockY}%`;
-  yellowPawnHtml.style.left = `${yellowBlockX}%`;
+  // switch
+
+  let blockX = block.x;
+  let blockY = block.y;
+
+  yellowPawn = { x: blockX, y: blockY };
+  yellowPawnHtml.style.top = `${blockY}%`;
+  yellowPawnHtml.style.left = `${blockX}%`;
   rollResult += rollResult;
 }
 
