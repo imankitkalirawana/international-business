@@ -1,0 +1,200 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>3D Dice</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <style>
+      body{
+        background: #000;
+      }
+      .dies {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: flex;
+        grid-gap: 1rem;
+        transform: translate(-50%, -50%);
+      }
+
+      .dice {
+        width: 50px;
+        height: 50px;
+        background: #fff;
+        color: #000;
+        border-radius: 4px;
+        font-family: Roboto, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        transition: 0.5s ease;
+      }
+
+      .dice:hover {
+        transform: rotateX(360deg) rotateY(360deg);
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .dice-face {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 80%;
+        height: 80%;
+        align-items: center;
+        position: relative;
+      }
+
+      .dot {
+        width: 30%;
+        height: 30%;
+        background: crimson;
+        border-radius: 50%;
+        margin: 10% auto;
+      }
+
+      .dot-3:nth-child(1) {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .dot-3:nth-child(2) {
+        align-self: center;
+        justify-self: center;
+      }
+      .dot-3:nth-child(3) {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+
+      .dot-4 {
+        flex-basis: 35%;
+      }
+      .dot-5:nth-child(1) {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .dot-5:nth-child(2) {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      .dot-5:nth-child(3) {
+        align-self: center;
+        justify-self: center;
+      }
+      .dot-5:nth-child(4) {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+      .dot-5:nth-child(5) {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dies" onclick="rollDice1(); rollDice2();">
+      <div class="dice" id="dice1">
+        <div class="dice-face" id="dice-face1">
+          <div class="dot"></div>
+        </div>
+      </div>
+      <div class="dice" id="dice2">
+        <div class="dice-face" id="dice-face2">
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function rollDice1() {
+        const dice1 = document.getElementById("dice1");
+        const diceFace1 = document.getElementById("dice-face1");
+
+        // Remove previous dots
+        diceFace1.innerHTML = "";
+        let count = 0;
+        const rollResult = Math.floor(Math.random() * 6) + 1;
+
+        for (let i = 0; i < rollResult; i++) {
+          const dot = document.createElement("div");
+          dot.classList.add("dot");
+          diceFace1.appendChild(dot);
+          count++;
+        }
+
+        if (count === 3) {
+          const dots = document.querySelectorAll(".dot");
+          dots.forEach((dot) => {
+            dot.classList.add("dot-3");
+          });
+        }
+
+        if (count === 4) {
+          const dots = document.querySelectorAll(".dot");
+          dots.forEach((dot) => {
+            dot.classList.add("dot-4");
+          });
+        }
+
+        if (count === 5) {
+          const dots = document.querySelectorAll(".dot");
+          dots.forEach((dot) => {
+            dot.classList.add("dot-5");
+          });
+        }
+
+        // Apply the 3D rotation effect
+        dice1.style.transform = "rotateX(360deg) rotateY(360deg)";
+      }
+
+      function rollDice2() {
+        const diceFace2 = document.getElementById("dice-face2");
+
+        // Remove previous dots
+        diceFace2.innerHTML = "";
+        let count = 0;
+        const rollResult = Math.floor(Math.random() * 6) + 1;
+
+        for (let i = 0; i < rollResult; i++) {
+          const dot = document.createElement("div");
+          dot.classList.add("dot");
+          diceFace2.appendChild(dot);
+          count++;
+        }
+
+        if (count === 3) {
+          const dots = document.querySelectorAll(".dot");
+          dots.forEach((dot) => {
+            dot.classList.add("dot-3");
+          });
+        }
+
+        if (count === 4) {
+          const dots = document.querySelectorAll(".dot");
+          dots.forEach((dot) => {
+            dot.classList.add("dot-4");
+          });
+        }
+
+        if (count === 5) {
+          const dots = document.querySelectorAll(".dot");
+          dots.forEach((dot) => {
+            dot.classList.add("dot-5");
+          });
+        }
+
+        // Apply the 3D rotation effect
+        diceFace2.parentElement.style.transform =
+          "rotateX(360deg) rotateY(360deg)";
+      }
+    </script>
+  </body>
+</html>

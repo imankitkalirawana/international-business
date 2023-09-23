@@ -1,0 +1,81 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Rollable Dice</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .dice {
+        width: 50px;
+        height: 50px;
+        background: crimson;
+        color: #fff;
+        border-radius: 4px;
+        font-family: Roboto, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+      }
+
+      .dice-face {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 80%;
+        height: 80%;
+      }
+
+      .dot {
+        width: 30%;
+        height: 30%;
+        background: white;
+        border-radius: 50%;
+        margin: 10% auto;
+      }
+
+      button {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dice" id="dice" onclick="rollDice()">
+      <div class="dice-face" id="dice-face">
+        <div class="dot"></div>
+      </div>
+    </div>
+    <script>
+      function rollDice() {
+        const dice = document.getElementById("dice");
+        const diceFace = document.getElementById("dice-face");
+
+        // Remove previous dots
+        diceFace.innerHTML = "";
+
+        // Generate a random number between 1 and 6 for the dice roll
+        const rollResult = Math.floor(Math.random() * 6) + 1;
+        const count = 0;
+        // Add the appropriate number of dots based on the roll result
+        for (let i = 0; i < rollResult; i++) {
+          const dot = document.createElement("div");
+          dot.classList.add("dot");
+          diceFace.appendChild(dot);
+          count++;
+        }
+      }
+    </script>
+  </body>
+</html>
