@@ -46,6 +46,8 @@ let players = {
 };
 
 let currTurn = 1;
+let diceResult = 1;
+console.log("Initial turn: ", currTurn);
 
 function rollDice() {
   diceFace.innerHTML = "";
@@ -57,9 +59,10 @@ function rollDice() {
     dot.classList.add("dot");
     diceFace.appendChild(dot);
   }
-  if (rollResult !== 6) {
-    currTurn = (currTurn % 4) + 1;
-  }
+  diceResult = rollResult;
+  // if (rollResult !== 6) {
+  //   currTurn = (currTurn % 4) + 1;
+  // }
 
   return rollResult;
 }
@@ -100,9 +103,18 @@ function movePawn(color) {
     block.id !== 27 &&
     block.id !== 32
   ) {
-    setTimeout(function () {
-      displayCountryDetails(block.id);
-    }, 1000);
+    if (Countries[block.id].purchased == 0) {
+      setTimeout(function () {
+        displayCountryDetails(block.id);
+      }, 1000);
+    } else {
+      console.log("Already purchased, Pay Rent!!!");
+      payRent();
+    }
+  } else {
+    if (diceResult !== 6) {
+      currTurn = (currTurn % 4) + 1;
+    }
   }
 
   pawns[color] = { x: blockX, y: blockY };
