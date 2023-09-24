@@ -21,6 +21,30 @@ let pawnPositions = {
   yellow: 0,
   green: 0,
 };
+
+let players = {
+  1: {
+    name: "Player 1",
+    money: 25000,
+    color: "red",
+  },
+  2: {
+    name: "Player 2",
+    money: 25000,
+    color: "blue",
+  },
+  3: {
+    name: "Player 3",
+    money: 25000,
+    color: "yellow",
+  },
+  4: {
+    name: "Player 4",
+    money: 25000,
+    color: "green",
+  },
+};
+
 let currTurn = 1;
 
 function rollDice() {
@@ -65,6 +89,21 @@ function movePawn(color) {
   );
   const blockX = block.x;
   const blockY = block.y;
+  if (
+    block.id !== 7 &&
+    block.id !== 9 &&
+    block.id !== 11 &&
+    block.id !== 15 &&
+    block.id !== 18 &&
+    block.id !== 20 &&
+    block.id !== 23 &&
+    block.id !== 27 &&
+    block.id !== 32
+  ) {
+    setTimeout(function () {
+      displayCountryDetails(block.id);
+    }, 1000);
+  }
 
   pawns[color] = { x: blockX, y: blockY };
   pawnElements[color].style.top = `${blockY}%`;
